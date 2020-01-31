@@ -4,7 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 var fs = require('fs');
 
 module.exports = {
+  //entry point for webpack compiling
   entry : "./src/js/index.js",
+  //this will go to the main directory, since I want it to push to github pages
+  output: {
+    filename: 'main.js',
+    path: __dirname
+  },
+  //mods to load various parts i'm using, namely sass, js, pug
   module: {
     rules: [
       {
