@@ -24,8 +24,8 @@ class catMap {
   		this.path = d3.geoPath().projection(this.projection);
   		this.click = false;
   		this.imageScale = d3.scaleLog()
-	  		.domain([1, 100, 500, 1000])
-	  		.range([100, 20, 7, 4]);
+	  		.domain([1, 5, 100, 500, 1000])
+	  		.range([350, 75, 20, 7, 4]);
   		this.colorScale = d3.scaleLinear()
 	  		.domain(d3.extent(this.gb2.features, d => {return d.properties.catsum}))
 	  		.range(['#f0f0f0', '#ff1b9c'])
