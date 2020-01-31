@@ -1,4 +1,7 @@
- @mixin breakpoint($point) {
+
+
+// mixins to use for mobile and various size styling
+@mixin breakpoint($point) {
    @if $point == desktop {
      @media (min-width: 70em) { @content ; }
   }
@@ -17,26 +20,53 @@
   }
 }
 
+// a variety of google fonts
 @import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
 
+// variables local to this app
 $font-fam: 'Permanent Marker', sans-serif;
 $background: #ffffff;
 $font: #222222;
 $black: #222222;
 
-.img-cats {
-	padding: 5px;
+
+.header {
+	.hed {
+		margin-top: 5px;
+		margin-left: 36px;
+		margin-bottom: 6px;
+		color: #4819cb;
+		font-family: $font-fam;
+		font-size: 3.4em;
+	}
+
+	.dek {
+			margin-top: 0;
+			font-size: 1.2em;
+			margin-left: 36px;
+			color: $black;
+			font-family: $font-fam;
+	}
 }
 
-a:visited, a:link {
-	color: #ff1b9c;
-	text-decoration: none;
+body {
+	// visibility set so that nothing visible before js loads, since styles load in js
+  visibility: visible !important;
+  background-color: $background;
 }
-a:hover {
-	color: #ff1b9c;
-	text-decoration: underline;
-}
+
+// styles for the main page
 main {
+
+	a:visited, a:link {
+		color: #ff1b9c;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #ff1b9c;
+		text-decoration: underline;
+	}
+
 	display: flex;
 	width: 100%;
 	margin-left: 20px;
@@ -46,122 +76,74 @@ main {
 	@include breakpoint(mobileonly) {
 
 	}	
-}
 
-#intro {
-	width: 66%;
-}
-#app {
-	width: 30%;
-	font-family: $font-fam;
+	#intro {
+		width: 66%;
+		.ps {
+			width: 40%;
+			margin-right: 60px;
+		}
 
-}
-
-// .intro {
-// 	margin-right: 30px;
-
-// }
-
-
-.hed {
-	margin-top: 5px;
-	margin-left: 36px;
-	margin-bottom: 6px;
-	color: #4819cb;
-}
-
-
-.up {
-	stroke: #4819cb !important;
-}
-.dek {
-		margin-top: 0;
-		font-size: 1.2em;
-		margin-left: 36px;
-		color: $black;
+		.image {
+			font-family: $font-fam;
+			width: 95%;
+			padding: 5px;
+			margin-right: 20px;
+			color: #4819cb;
+		}
+		.inner-image-wrap {
+			margin: 0 auto;
+			display: flex;
+		  flex-wrap: wrap;
+		  justify-content: flex-start;
+		}
+		.nums-wrap {
+			margin-bottom: 15px;
+		}
+		.number-of-cats {
+			font-size: 40px;
+		}
+		.card {
+			font-family: 'Helvetica Neue', 'sans-serif';
+			margin: 40px 16px 16px 16px;
+			height: 500px;
+			padding-top: 10px;
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-bottom: 10px;
+			margin-bottom: 90px;
+			display: flex;
+			p {
+				font-size: 18px;
+				margin-top: 0;
+				line-height: 1.6;
+			}
+			.paragraph-img {
+				position: relative;
+			  top: 6px;
+			}
+			.img-cats {
+				padding: 5px;
+			}
+		}
+	}
+	#app {
+		width: 30%;
 		font-family: $font-fam;
+		svg {
+			cursor: crosshair;
+			overflow: visible;
+			.up {
+				stroke: #4819cb !important;
+			}
+		}
+	}
 
-}
+	.source {
+		font-family: 'Helvetica Neue';
+		margin-bottom: 30px;
+		text-align: right;
+		margin-right: 20px;
 
-body {
-  visibility: visible !important;
-  
-  background-color: $background;
-}
-
-h1 {
-		font-family: $font-fam;
-		font-size: 3.4em;
-		color: $font;
-}
-
-.card {
-	font-family: 'Helvetica Neue', 'sans-serif';
-	margin: 40px 16px 16px 16px;
-	height: 500px;
-	padding-top: 10px;
-	padding-right: 20px;
-	padding-left: 20px;
-	padding-bottom: 10px;
-	margin-bottom: 90px;
-	// color: $font;
-	display: flex;
-	// flex-wrap: wrap;
-	// background-color: #f0f0f0;
-}
-
-.ps {
-	width: 40%;
-	margin-right: 60px;
-}
-
-.image {
-	font-family: $font-fam;
-	width: 95%;
-	// overflow-y: scroll;
-	padding: 5px;
-	margin-right: 20px;
-	color: #4819cb;
-
-}
-
-.inner-image-wrap {
-	margin: 0 auto;
-	display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-svg {
-	cursor: crosshair;
-}
-.nums-wrap {
-	// height: 50px;
-	// width: 30%;
-	margin-bottom: 15px;
-}
-.number-of-cats {
-	font-size: 40px;
-}
-.card p {
-	font-size: 18px;
-	// padding-right: 50px;
-	margin-top: 0;
-
-}
-
-.paragraph-img {
-	position: relative;
-  top: 6px;
-}
-
-.source {
-	font-family: 'Helvetica Neue';
-	margin-bottom: 30px;
-	text-align: right;
-	margin-right: 20px;
-
-}
-
-.card p {
-	line-height: 1.6;
+	}
 }
