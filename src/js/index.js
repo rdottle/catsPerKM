@@ -24,5 +24,17 @@ const Gatto = new catMap({
 	scotland: scotland
 })
 
-
 Gatto.onFirstLoad("NH2499");
+
+d3.select(".source").on("click", function() {
+  if (d3.select(".links").classed("hide")) {
+    d3.select(".hide").classed("hide", false).classed("show", true);
+    d3.select(".arrow").transition().duration(300).ease(d3.easeLinear).style("transform", "rotate(0deg)")
+
+  }
+  else {
+    d3.select(".links").classed("hide", true).classed("show", false);
+    d3.select(".arrow").transition().duration(300).ease(d3.easeLinear).style("transform", "rotate(-90deg)")
+
+  }
+})

@@ -4,15 +4,15 @@ import { geoAlbers } from "d3-geo";
 import * as d3 from 'd3';
 const topojson = require("topojson-client");
 
-class catMap { 
+class catMap {
   constructor(opts) {
-  	
+
   	// parent el
   	this.canvas = opts.canvas;
   	// map data
   	this.greatBritainShape = opts.greatBritainShape;
   	// town and city data for gb and scotland comes seperately
-  	this.mobile = window.innerWidth < 1200 ? true : false; 
+  	this.mobile = window.innerWidth < 1200 ? true : false;
   	this.towns = opts.towns;
   	this.scotland = opts.scotland;
   	// towns i want to show on the map for now, might add more in the future?
@@ -23,13 +23,13 @@ class catMap {
   	this.height = window.innerHeight- 90;
 
   	// variable click used to allow deactivation of hover to solve an unpleasant user experience with the hover state
-		this.click = false;
+		this.click = !this.mobile ? false : true;
 
 		// color and image size scales init
 		this.initScales();
-  
+
   	this.initProjection();
-  	
+
   	// draw this map!
 		this.draw();
 	}
@@ -38,7 +38,7 @@ class catMap {
 
 		// this log scale determines the size of the image displayed, and needs some work
 		this.imageScale = d3.scaleLog()
-			.base(10)
+		.base(10)
   		.domain([1, 10, 20, 100, 1000])
   		.range([350, 75, 60, 25, 4]);
 
@@ -82,16 +82,17 @@ class catMap {
 		  .attr("class", d => d.properties.PLAN_NO)
 		  .style("fill", d => this.colorScale(d.properties.catsum))
 		  .on("mouseover", (d,i,els) => {
-		  	 	this.hoverOver(d,i,els); 
+		  	 	this.hoverOver(d,i,els);
 		    })
 		  .on("mouseout", (d,i,els) => {
 		    	d3.selectAll("path").style("opacity", 1).classed("highlight", false);
 		    })
 		  .on("click", (d,i,els) => {
 		     	// on click, freeze hover state, until click again to make it easier to see cat gif chart
-					this.click = this.click ? false : true;
+					!this.mobile ? (this.click = this.click ? false : true) : null;
 					this.interactionsWithGrid(d,i,els);
 		     	this.calcImage(d.properties.catsum);
+          this.numberSentence(d.properties.catsum);
 		  })
 
 
@@ -108,9 +109,9 @@ class catMap {
 		    .style("fill", "#4819cb")
 		   	.style("font-size", "12px")
 		    .style("pointer-events", "none")
-		    .attr("x", d => this.projection(d3.geoCentroid(d))[0]-10)
+		    .attr("x", d => d.properties.tcity15nm == "Liverpool" ? this.projection(d3.geoCentroid(d))[0] - 10 : this.projection(d3.geoCentroid(d))[0])
 		    // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
-		    .attr("y", d => d.properties.tcity15nm == "Liverpool" || d.properties.tcity15nm == "Cardiff" ? this.projection(d3.geoCentroid(d))[1] + 20 : this.projection(d3.geoCentroid(d))[1]+6)
+		    .attr("y", d => d.properties.tcity15nm == "Liverpool"  || d.properties.tcity15nm == "Cardiff" ? this.projection(d3.geoCentroid(d))[1] + 24 : this.projection(d3.geoCentroid(d))[1]+ 6)
 		    .text(d => d.properties.tcity15nm)
 
 		// add a group for the scotland labels
@@ -127,13 +128,13 @@ class catMap {
 		  .style("fill", "#4819cb")
 		  .style("font-size", "12px")
 		  // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
-		  .attr("x", d => d.properties.name == "Glasgow" ? this.projection(d3.geoCentroid(d))[0]-50 : this.projection(d3.geoCentroid(d))[0])
+		  .attr("x", d => d.properties.name == "Glasgow" ? this.projection(d3.geoCentroid(d))[0]-60 : this.projection(d3.geoCentroid(d))[0])
 		  .attr("y", d => this.projection(d3.geoCentroid(d))[1]+20)
-		  .text(d => d.properties.name) 
-	
+		  .text(d => d.properties.name)
+
 	}
 
-	hoverOver(d, i, els) {
+	hoverOver (d, i, els) {
 
   	// if someone has clicked do not initiate hover, so they can pause to see cat gif if they want
   	// hover is reactivated on another click
@@ -149,7 +150,7 @@ class catMap {
 	  	d3.selectAll("path").filter(function() {
 		    	 return !this.classList.contains('highlight')
 		  }).style("opacity", 0.5)
-			
+
 			this.interactionsWithGrid(d,i,els);
 
 	  	// calculate those cat gifs!
@@ -157,16 +158,18 @@ class catMap {
 
   	}
 	}
-	numberSentence (catSum) { 
-		d3.select(".number-of-cats").html("About " + this.formatNumber(catSum) + " cats in this area")
-	}
+	numberSentence (catSum) {
 
-	calcImage(catSum) {
+		d3.select(".number-of-cats").html("About " + this.formatNumber(catSum) + " cats in this area")
+
+  }
+
+	calcImage (catSum) {
 
 		// total cats in grid square divided by 100 rounded up
   	let catsTotal =  Math.ceil(catSum/100);
-  	
-  	// for this cat total, which is the sum divided by 100 and rounded up to the nearest 100, 
+
+  	// for this cat total, which is the sum divided by 100 and rounded up to the nearest 100,
   	// add an image, building the gif chart
   	// and scale the size of that image using the d3 image scale defined earlier
   	for (var i = catsTotal - 1; i >= 0; i--) {
@@ -175,10 +178,10 @@ class catMap {
   			.attr("class", "img-cats")
   			.attr("src", "https://cataas.com/cat/gif?height="+Math.ceil(this.imageScale(catsTotal)));
 
-  	} 
+  	}
 	}
 
-	interactionsWithGrid(d, i, els) {
+	interactionsWithGrid (d, i, els) {
 
 		// make sure hovered item is at the top of the svg so it doesn't overlap
 		d3.select(els[i]).raise();
@@ -191,9 +194,9 @@ class catMap {
 
 	}
 
- 	formatNumber(num) {
+ 	formatNumber (num) {
 
- 		// format number to show on the page without too many decimals etc. 
+ 		// format number to show on the page without too many decimals etc.
   	num = Math.round(num);
     var num_parts = num.toString().split(".");
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -201,11 +204,9 @@ class catMap {
 
 	}
 
-	onFirstLoad(example) {
-
+	onFirstLoad (example) {
 
 		let exampleData = this.greatBritainShape.features.filter(d => d.properties.PLAN_NO == example);
-		console.log(exampleData)
 		// make sure hovered item is at the top of the svg so it doesn't overlap
 		d3.select("." + example).raise();
 		// remove all images from previous hover or click state

@@ -21,26 +21,28 @@
 }
 
 // a variety of google fonts
-@import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Neuton&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Neuton&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 // variables local to this app
+
 $font-fam: 'Press Start 2P', sans-serif;
 $background: #ffeed2;
-$font: #222222;
+$font: #6f6c7f;
 $black: #222222;
-
+$blue: #4819cb;
+$red: #ff1b9c;
 
 .header {
 	margin-top: 20px;
 	@include breakpoint(phablet) {
 		margin-bottom: 75px;
-	}	
+	}
 	.hed {
 		margin-top: 5px;
 		margin-left: 34px;
-		margin-bottom: 10px;
-		color: #4819cb;
+		margin-bottom: 20px;
+		color: $blue;
 		font-family: $font-fam;
 		font-size: 3em;
 	}
@@ -52,7 +54,7 @@ $black: #222222;
 			color: $black;
 			font-family: 'Helvetica';
 			font-weight: 200;
-			color: #6f6c7f;
+			color: $font;
 	}
 }
 
@@ -60,23 +62,23 @@ body {
 	margin: 0 auto;
 	flex-wrap: wrap;
 	@include breakpoint(phablet) {
+    max-width: 900px;
 		width: 100%;
 		margin: 0 auto;
 		flex-wrap: wrap;
-	}	
+	}
 	// visibility set so that nothing visible before js loads, since styles load in js
   visibility: visible !important;
   background-color: $background;
 
 	a:visited, a:link {
-		color: #ff1b9c;
+		color: $red;
 		text-decoration: none;
 	}
 	a:hover {
-		color: #ff1b9c;
+		color: $red;
 		text-decoration: underline;
 	}
-
 }
 
 // styles for the main page
@@ -91,17 +93,19 @@ main {
 		margin-left: 40px;
 			@include breakpoint(phablet) {
 				width: 100%;
+        max-width: 900px;
 				flex-wrap: wrap;
 				margin-left: 0px;
-		}	
+        margin: 0 auto;
+		}
 		.ps {
 			width: 40%;
 			// padding-top: 65px;
-			
+
 			@include breakpoint(phablet) {
 				width: 100%;
 				margin-right: 0;
-			}	
+			}
 			margin-right: 60px;
 		}
 
@@ -109,7 +113,7 @@ main {
 			font-family: $font-fam;
 			width: 95%;
 			margin-right: 20px;
-			color: #4819cb;
+			color: $blue;
 		}
 		.inner-image-wrap {
 			margin: 0 auto;
@@ -127,8 +131,7 @@ main {
 			height: 500px;
 			@include breakpoint(phablet) {
 				flex-wrap: wrap;
-				height: 1000px;
-			}	
+			}
 
 			font-family: 'Helvetica';
 			font-weight: 200;
@@ -140,10 +143,49 @@ main {
 			margin-bottom: 90px;
 			display: flex;
 			p {
-				color: #6f6c7f;
+				color: $font;
 				font-size: 18px;
 				margin-top: 0;
 				line-height: 1.7;
+			}
+			.source {
+        cursor: pointer;
+				margin-top: 30px;
+				font-weight: 200;
+				margin-bottom: 30px;
+				text-align: right;
+				margin-right: 20px;
+				color: $font;
+        font-family: "Helvetica";
+				@include breakpoint(phablet) {
+						position: sticky;
+            margin-top: 30px;
+					}
+        .source-wrap {
+          display: flex;
+          justify-content: flex-end;
+          font-family: $font-fam;
+          margin-bottom: 20px;
+        }
+        .arrow {
+          width: 0;
+          content: '';
+          border-top: 7px solid $font;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          transform: rotate(-90deg);
+          margin: 3px;
+        }
+
+        .hide {
+          opacity: 0;
+          overflow: hidden;
+          transition: opacity 0.5s;
+        }
+        .show {
+          opacity: 1;
+          transition: opacity 0.5s;
+        }
 			}
 			.paragraph-img {
 				position: relative;
@@ -160,22 +202,26 @@ main {
 		width: 30%;
 		@include breakpoint(phablet) {
 			width: 100%;
-		}	
+		}
 		font-family: $font-fam;
 		svg {
 			cursor: crosshair;
 			overflow: visible;
 			.up {
-				stroke: #4819cb !important;
+				stroke: $blue !important;
 			}
 		}
 		.key {
 			position: absolute;
-			bottom: 25%;
+			bottom: 33%;
 			display: flex;
 			margin-left: 36px;
 			font-family: $font-fam;
-			color: #6f6c7f;
+			color: $font;
+      @include breakpoint(phablet) {
+        top: 0%;
+        position: relative;
+      }
 			.square {
 				height: 15px;
 				width: 15px;
@@ -183,21 +229,5 @@ main {
 				margin-right: 10px;
 			}
 	}
-	}
-
-	.source {
-		margin-top: 40px;
-		font-family: 'Helvetica';	
-		font-weight: 200;
-		margin-bottom: 30px;
-		text-align: right;
-		margin-right: 20px;
-		color: #6f6c7f;
-		@include breakpoint(phablet) {
-				position: sticky;
-	
-
-			}	
-
 	}
 }
