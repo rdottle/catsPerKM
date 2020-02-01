@@ -99,9 +99,9 @@ class catMap {
 	    .attr("class", "towns")
 	    .attr("transform", "translate(0,100)");
 
-		this.engWalesG.selectAll("text")
+  	this.engWalesG.selectAll("text")
 			// only include label data for those I chose in this.major
-		  .data(this.towns.features.filter((d)=> {return this.major.includes(d.properties.tcity15nm) ? d : null }))
+		  .data(this.towns.features)
 		.enter()
 		  .append("text")
 		    .attr("dy", "0")
