@@ -6,18 +6,21 @@ html(lang='en')
   body(style="visibility: hidden")
     .header 
         h1.hed Two Things That Are Good
-        p.dek Cats & Open Data—Made possible with 
-          a(href="https://datasetsearch.research.google.com/") Google dataset search 
+        p.dek Cats & open data—made possible with 
+          a(href="https://datasetsearch.research.google.com/search?query=cats") Google dataset search engine 
     main
       section#app
+        div.key
+          div.square
+          span 25 km sq.
         div#cats
       section#intro
         div.card
           div.ps
-            p.intro This grid map shows the estimated number of cats per 25 square kilometers in Great Britain, as of January 1, 2015 when the cat population was modeled. 
+            p.intro The map shows the estimated cat population per 25 square kilometer area in Great Britain, as of January 1, 2015 when the estimates were modeled. 
             p Hover or click on a square to see the estimated number of cats, visualized in  
-              img.paragraph-img(src="https://cataas.com/cat/gif?height=30") 
-              |  Internet Cats, where every one Internet Cat equals 100 estimated cats. All values were rounded up to the nearest 100 cats for this Internet Cat Chart.
+              img.paragraph-img(src="https://cataas.com/cat?height=30") 
+              |  GIFs, where every one cat GIF represents one hundred cats. To not make half-GIFS, every cat amount is rounded to the next one hundred cats. For example, 102 cats would be represented by two GIFs.
           div.image
             div.nums-wrap
                 span.id-number

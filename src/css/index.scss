@@ -6,31 +6,35 @@
      @media (min-width: 70em) { @content ; }
   }
    @else if $point == laptop {
-     @media (min-width: 64em) { @content ; }
+     @media (min-width: 1600px) { @content ; }
   }
     @else if $point == tablet {
-     @media (min-width: 50em) { @content ; }
+     @media (min-width: 1200px) { @content ; }
   }
    @else if $point == phablet {
-     @media (min-width: 37.5em)  { @content ; }
+     @media (max-width: 1200px)  { @content ; }
   }
   @else if $point == mobileonly {
-     @media (max-width: 37.5em)  { @content ; }
+     @media (max-width: 400px)  { @content ; }
 
   }
 }
 
 // a variety of google fonts
 @import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Neuton&display=swap');
 
 // variables local to this app
 $font-fam: 'Permanent Marker', sans-serif;
-$background: #ffffff;
+$background: #ffeed2;
 $font: #222222;
 $black: #222222;
 
 
 .header {
+	@include breakpoint(phablet) {
+		margin-bottom: 75px;
+	}	
 	.hed {
 		margin-top: 5px;
 		margin-left: 36px;
@@ -45,18 +49,22 @@ $black: #222222;
 			font-size: 1.2em;
 			margin-left: 36px;
 			color: $black;
-			font-family: $font-fam;
+			font-family: 'Nanum Myeongjo', serif;
+			color: #6f6c7f;
 	}
 }
 
 body {
+	margin: 0 auto;
+	flex-wrap: wrap;
+	@include breakpoint(phablet) {
+		width: 75%;
+		margin: 0 auto;
+		flex-wrap: wrap;
+	}	
 	// visibility set so that nothing visible before js loads, since styles load in js
   visibility: visible !important;
   background-color: $background;
-}
-
-// styles for the main page
-main {
 
 	a:visited, a:link {
 		color: #ff1b9c;
@@ -67,27 +75,36 @@ main {
 		text-decoration: underline;
 	}
 
+}
+
+// styles for the main page
+main {
 	display: flex;
 	width: 100%;
 	margin-left: 20px;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	height: 90vh;
-	@include breakpoint(mobileonly) {
-
-	}	
-
 	#intro {
 		width: 66%;
+		margin-left: 40px;
+			@include breakpoint(phablet) {
+				width: 100%;
+				flex-wrap: wrap;
+		}	
 		.ps {
 			width: 40%;
+			padding-top: 65px;
+			
+			@include breakpoint(phablet) {
+				width: 100%;
+				margin-right: 0;
+			}	
 			margin-right: 60px;
 		}
 
 		.image {
 			font-family: $font-fam;
 			width: 95%;
-			padding: 5px;
 			margin-right: 20px;
 			color: #4819cb;
 		}
@@ -104,9 +121,14 @@ main {
 			font-size: 40px;
 		}
 		.card {
-			font-family: 'Helvetica Neue', 'sans-serif';
-			margin: 40px 16px 16px 16px;
 			height: 500px;
+			@include breakpoint(phablet) {
+				flex-wrap: wrap;
+				height: 1000px;
+			}	
+
+			font-family: 'Nanum Myeongjo', serif;
+			margin: 40px 16px 16px 16px;
 			padding-top: 10px;
 			padding-right: 20px;
 			padding-left: 20px;
@@ -114,21 +136,27 @@ main {
 			margin-bottom: 90px;
 			display: flex;
 			p {
+				color: #6f6c7f;
 				font-size: 18px;
 				margin-top: 0;
-				line-height: 1.6;
+				line-height: 1.7;
 			}
 			.paragraph-img {
 				position: relative;
 			  top: 6px;
+			  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(190deg);
 			}
 			.img-cats {
 				padding: 5px;
+				filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(190deg);
 			}
 		}
 	}
 	#app {
 		width: 30%;
+		@include breakpoint(phablet) {
+			width: 100%;
+		}	
 		font-family: $font-fam;
 		svg {
 			cursor: crosshair;
@@ -137,13 +165,34 @@ main {
 				stroke: #4819cb !important;
 			}
 		}
+		.key {
+			position: absolute;
+			bottom: 25%;
+			display: flex;
+			margin-left: 36px;
+			font-family: $font-fam;
+			color: #6f6c7f;
+			.square {
+				height: 15px;
+				width: 15px;
+				background-color: #fec770;
+				margin-right: 10px;
+				margin-top: 5px;
+			}
+	}
 	}
 
 	.source {
-		font-family: 'Helvetica Neue';
+		font-family: 'Nanum Myeongjo', serif;
 		margin-bottom: 30px;
 		text-align: right;
 		margin-right: 20px;
+		color: #6f6c7f;
+		@include breakpoint(phablet) {
+				position: sticky;
+	
+
+			}	
 
 	}
 }

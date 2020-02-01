@@ -11,15 +11,16 @@ class catMap {
   	this.canvas = opts.canvas;
   	// map data
   	this.greatBritainShape = opts.greatBritainShape;
-  	// town and city data for gb and scotland comes seperately 
+  	// town and city data for gb and scotland comes seperately
+  	this.mobile = window.innerWidth < 1200 ? true : false; 
   	this.towns = opts.towns;
   	this.scotland = opts.scotland;
   	// towns i want to show on the map for now, might add more in the future?
 		this.major = ["London", "Manchester", "Bristol", "Liverpool", "Birmingham", "Cardiff"];
 
   	// get width of page, will not be resized automatically
-  	this.width = window.innerWidth/3;
-  	this.height = window.innerHeight- 50;
+  	this.width = this.mobile ? window.innerWidth : window.innerWidth/2.5;
+  	this.height = window.innerHeight- 90;
 
   	// variable click used to allow deactivation of hover to solve an unpleasant user experience with the hover state
 		this.click = false;
@@ -37,13 +38,14 @@ class catMap {
 
 		// this log scale determines the size of the image displayed, and needs some work
 		this.imageScale = d3.scaleLog()
-  		.domain([1, 5, 100, 500, 1000])
-  		.range([350, 75, 20, 7, 4]);
+			.base(10)
+  		.domain([1, 10, 20, 100, 1000])
+  		.range([350, 75, 60, 25, 4]);
 
   	// color scale for the sum of the cats per 25km square
 		this.colorScale = d3.scaleLinear()
   		.domain(d3.extent(this.greatBritainShape.features, d => {return d.properties.catsum}))
-  		.range(['#f0f0f0', '#ff1b9c'])
+  		.range(['#fec770', '#ff1b9c'])
 
 	}
 
@@ -69,33 +71,28 @@ class catMap {
 		// group for grid of squares
 	  this.g = this.svg.append("g")
 	      .attr("class", "grid-map")
-	      .attr("transform", "translate(0,100)");
+	      .attr("transform", this.mobile ? "translate(30,100)" : "translate(0,100)");
 
 	  // append paths and adding data, draw paths using projection, color using color scale
-		 this.g.selectAll("path")
-		    .data(this.greatBritainShape.features)
-		  .enter()
-		    .append("path")
-		    .attr("d", this.path)
-		    .style("fill", d => this.colorScale(d.properties.catsum))
-		    .on("mouseover", (d,i,els) => {
-
-		     	this.hoverOver(d,i,els); 
-
+		this.g.selectAll("path")
+		  .data(this.greatBritainShape.features)
+		.enter()
+		  .append("path")
+		  .attr("d", this.path)
+		  .attr("class", d => d.properties.PLAN_NO)
+		  .style("fill", d => this.colorScale(d.properties.catsum))
+		  .on("mouseover", (d,i,els) => {
+		  	 	this.hoverOver(d,i,els); 
 		    })
-		    .on("mouseout", (d,i,els) => {
-
+		  .on("mouseout", (d,i,els) => {
 		    	d3.selectAll("path").style("opacity", 1).classed("highlight", false);
-
 		    })
-		    .on("click", (d,i,els) => {
-
+		  .on("click", (d,i,els) => {
 		     	// on click, freeze hover state, until click again to make it easier to see cat gif chart
 					this.click = this.click ? false : true;
 					this.interactionsWithGrid(d,i,els);
 		     	this.calcImage(d.properties.catsum);
-		      
-		    })
+		  })
 
 
  		this.engWalesG = this.svg.append("g")
@@ -134,7 +131,7 @@ class catMap {
 	
 	}
 
-	hoverOver(d,i,els) {
+	hoverOver(d, i, els) {
 
   	// if someone has clicked do not initiate hover, so they can pause to see cat gif if they want
   	// hover is reactivated on another click
@@ -144,7 +141,7 @@ class catMap {
 	  	d3.select(els[i]).classed("highlight", true)
 
 	  	// update text to display the actual number of cats, formatted to be human readable
-	  	d3.select(".number-of-cats").html(this.formatNumber(d.properties.catsum) + " estimated cats")
+	  	this.numberSentence(d.properties.catsum);
 
 	  	// quick and dirty fix to make all except highlighted square transparent, needs a re-factor
 	  	d3.selectAll("path").filter(function() {
@@ -157,6 +154,9 @@ class catMap {
 	  	this.calcImage(d.properties.catsum);
 
   	}
+	}
+	numberSentence (catSum) { 
+		d3.select(".number-of-cats").html("About " + this.formatNumber(catSum) + " cats in this area")
 	}
 
 	calcImage(catSum) {
@@ -176,7 +176,7 @@ class catMap {
   	} 
 	}
 
-	interactionsWithGrid(d,i,els) {
+	interactionsWithGrid(d, i, els) {
 
 		// make sure hovered item is at the top of the svg so it doesn't overlap
 		d3.select(els[i]).raise();
@@ -192,10 +192,29 @@ class catMap {
  	formatNumber(num) {
 
  		// format number to show on the page without too many decimals etc. 
-  	num = Math.round(num * 100) / 100;
+  	num = Math.round(num);
     var num_parts = num.toString().split(".");
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return num_parts.join(".");
+
+	}
+
+	onFirstLoad(example) {
+
+
+		let exampleData = this.greatBritainShape.features.filter(d => d.properties.PLAN_NO == example);
+		console.log(exampleData)
+		// make sure hovered item is at the top of the svg so it doesn't overlap
+		d3.select("." + example).raise();
+		// remove all images from previous hover or click state
+	  d3.selectAll(".card .img-cats").remove();
+	  // make sure to remove hovered class from previous square
+	  d3.selectAll("path").classed("up", false);
+	  // add hover class to this current el
+	  d3.select("." + example).classed("up", true);
+
+	  this.calcImage(exampleData[0].properties.catsum);
+	  this.numberSentence(exampleData[0].properties.catsum);
 
 	}
 

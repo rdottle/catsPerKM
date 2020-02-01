@@ -24,3 +24,5 @@ const Gatto = new catMap({
 	scotland: scotland
 })
 
+
+Gatto.onFirstLoad("NH2499");
