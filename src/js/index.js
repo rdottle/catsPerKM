@@ -4,7 +4,6 @@ import './../css/index.scss';
 import 'intersection-observer';
 
 
-const topojson = require("topojson-client");
 const gb = require("./../data/out.geojson.json");
 const town = require("./../data/towns.geojson.json");
 const scotland = require("./../data/scotlans.json");

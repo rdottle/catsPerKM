@@ -2,7 +2,6 @@ import { geoAlbers } from "d3-geo";
 
 // lessen the load of the d3 library by only importing ones i am including and individually add them to the package.json
 import * as d3 from 'd3';
-const topojson = require("topojson-client");
 
 class catMap {
   constructor(opts) {
@@ -148,7 +147,7 @@ class catMap {
 
 	  	// quick and dirty fix to make all except highlighted square transparent, needs a re-factor
 	  	d3.selectAll("path").filter(function() {
-		    	 return !this.classList.contains('highlight')
+		    return !this.classList.contains('highlight')
 		  }).style("opacity", 0.5)
 
 			this.interactionsWithGrid(d,i,els);
@@ -159,8 +158,10 @@ class catMap {
   	}
 	}
 	numberSentence (catSum) {
-
-		d3.select(".number-of-cats").html("About " + this.formatNumber(catSum) + " cats in this area")
+    let sentence = this.formatNumber(catSum) == 1 ? "About " + this.formatNumber(catSum) + " cat in this area" :
+      this.formatNumber(catSum) == 0 ? "0 cats!" :
+      "About " + this.formatNumber(catSum) + " cats in this area";
+		d3.select(".number-of-cats").html(sentence)
 
   }
 
@@ -168,7 +169,6 @@ class catMap {
 
 		// total cats in grid square divided by 100 rounded up
   	let catsTotal =  Math.ceil(catSum/100);
-
   	// for this cat total, which is the sum divided by 100 and rounded up to the nearest 100,
   	// add an image, building the gif chart
   	// and scale the size of that image using the d3 image scale defined earlier
@@ -197,10 +197,11 @@ class catMap {
  	formatNumber (num) {
 
  		// format number to show on the page without too many decimals etc.
-  	num = Math.round(num);
+  	num = num < 1 && num > 0 ? 1 : Math.round(num);
     var num_parts = num.toString().split(".");
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return num_parts.join(".");
+
 
 	}
 
