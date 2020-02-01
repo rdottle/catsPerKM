@@ -106,6 +106,7 @@ class catMap {
 		  .append("text")
 		    .attr("dy", "0")
 		    .style("fill", "#4819cb")
+		   	.style("font-size", "12px")
 		    .style("pointer-events", "none")
 		    .attr("x", d => this.projection(d3.geoCentroid(d))[0]-10)
 		    // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
@@ -124,6 +125,7 @@ class catMap {
 		  .attr("dy", "0")
 		  .style("pointer-events", "none")
 		  .style("fill", "#4819cb")
+		  .style("font-size", "12px")
 		  // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
 		  .attr("x", d => d.properties.name == "Glasgow" ? this.projection(d3.geoCentroid(d))[0]-50 : this.projection(d3.geoCentroid(d))[0])
 		  .attr("y", d => this.projection(d3.geoCentroid(d))[1]+20)

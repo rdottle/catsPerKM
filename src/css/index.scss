@@ -23,33 +23,35 @@
 // a variety of google fonts
 @import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Neuton&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 // variables local to this app
-$font-fam: 'Permanent Marker', sans-serif;
+$font-fam: 'Press Start 2P', sans-serif;
 $background: #ffeed2;
 $font: #222222;
 $black: #222222;
 
 
 .header {
+	margin-top: 20px;
 	@include breakpoint(phablet) {
 		margin-bottom: 75px;
 	}	
 	.hed {
 		margin-top: 5px;
-		margin-left: 36px;
-		margin-bottom: 6px;
+		margin-left: 34px;
+		margin-bottom: 10px;
 		color: #4819cb;
 		font-family: $font-fam;
-		font-size: 3.4em;
+		font-size: 3em;
 	}
 
 	.dek {
 			margin-top: 0;
 			font-size: 1.2em;
-			margin-left: 36px;
+			margin-left: 37px;
 			color: $black;
-			font-family: 'Nanum Myeongjo', serif;
+			font-family: 'Helvetica';
+			font-weight: 200;
 			color: #6f6c7f;
 	}
 }
@@ -58,7 +60,7 @@ body {
 	margin: 0 auto;
 	flex-wrap: wrap;
 	@include breakpoint(phablet) {
-		width: 75%;
+		width: 100%;
 		margin: 0 auto;
 		flex-wrap: wrap;
 	}	
@@ -90,10 +92,11 @@ main {
 			@include breakpoint(phablet) {
 				width: 100%;
 				flex-wrap: wrap;
+				margin-left: 0px;
 		}	
 		.ps {
 			width: 40%;
-			padding-top: 65px;
+			// padding-top: 65px;
 			
 			@include breakpoint(phablet) {
 				width: 100%;
@@ -118,7 +121,7 @@ main {
 			margin-bottom: 15px;
 		}
 		.number-of-cats {
-			font-size: 40px;
+			font-size: 22px;
 		}
 		.card {
 			height: 500px;
@@ -127,7 +130,8 @@ main {
 				height: 1000px;
 			}	
 
-			font-family: 'Nanum Myeongjo', serif;
+			font-family: 'Helvetica';
+			font-weight: 200;
 			margin: 40px 16px 16px 16px;
 			padding-top: 10px;
 			padding-right: 20px;
@@ -177,13 +181,14 @@ main {
 				width: 15px;
 				background-color: #fec770;
 				margin-right: 10px;
-				margin-top: 5px;
 			}
 	}
 	}
 
 	.source {
-		font-family: 'Nanum Myeongjo', serif;
+		margin-top: 40px;
+		font-family: 'Helvetica';	
+		font-weight: 200;
 		margin-bottom: 30px;
 		text-align: right;
 		margin-right: 20px;
