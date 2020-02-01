@@ -20,7 +20,7 @@ class catMap {
 
   	// get width of page, will not be resized automatically
   	this.width = this.mobile ? window.innerWidth : window.innerWidth/2.5;
-  	this.height = window.innerHeight- 90;
+  	this.height = window.innerHeight - 90;
 
   	// variable click used to allow deactivation of hover to solve an unpleasant user experience with the hover state
 		this.click = !this.mobile ? false : true;
@@ -40,7 +40,7 @@ class catMap {
 		this.imageScale = d3.scaleLog()
 		.base(10)
   		.domain([1, 10, 20, 100, 1000])
-  		.range([350, 75, 60, 25, 4]);
+  		.range([350, 75, 65, 30, 7]);
 
   	// color scale for the sum of the cats per 25km square
 		this.colorScale = d3.scaleLinear()

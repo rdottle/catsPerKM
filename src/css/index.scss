@@ -49,7 +49,7 @@ $red: #ff1b9c;
 
 	.dek {
 			margin-top: 0;
-			font-size: 1.2em;
+			font-size: 22px;
 			margin-left: 37px;
 			color: $black;
 			font-family: 'Helvetica';
@@ -144,9 +144,9 @@ main {
 			display: flex;
 			p {
 				color: $font;
-				font-size: 18px;
+				font-size: 20px;
 				margin-top: 0;
-				line-height: 1.7;
+				line-height: 1.5em;
 			}
 			.source {
         cursor: pointer;
