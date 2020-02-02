@@ -1,7 +1,6 @@
-import { geoAlbers } from "d3-geo";
 
 // lessen the load of the d3 library by only importing ones i am including and individually add them to the package.json
-import * as d3 from 'd3';
+import{ d3 } from './../d3.js';
 
 class catMap {
   constructor(opts) {
@@ -31,33 +30,34 @@ class catMap {
 
   	// draw this map!
 		this.draw();
+
 	}
 
 	initScales() {
 
 		// this log scale determines the size of the image displayed, and needs some work
 		this.imageScale = d3.scaleLog()
-		.base(10)
+		  .base(10)
   		.domain([1, 10, 20, 100, 1000])
-  		.range([350, 75, 65, 30, 7]);
+  		.range([(this.mobile ? 300 : 350), 75, 65, 30, 7]);
 
   	// color scale for the sum of the cats per 25km square
 		this.colorScale = d3.scaleLinear()
   		.domain(d3.extent(this.greatBritainShape.features, d => {return d.properties.catsum}))
-  		.range(['#fec770', '#ff1b9c'])
+  		.range(['#fec770', '#ff1b9c']);
 
 	}
 
 	initProjection () {
 
 		// init the projection with geoAlbers and set the scale, static scale since this isn't a zoomable map
-		this.projection = geoAlbers()
+		this.projection = d3.geoAlbers()
 	    .rotate([0, 0.0])
 	    .center([-2.0, 53.5])
 	    .parallels([35.0, 65.0])
 	    .translate([this.width / 2, this.height / 2])
 	    .scale(3500)
-	    .precision(.1)
+	    .precision(.1);
 		this.path = d3.geoPath().projection(this.projection);
 
 	}
@@ -92,7 +92,7 @@ class catMap {
 					this.interactionsWithGrid(d,i,els);
 		     	this.calcImage(d.properties.catsum);
           this.numberSentence(d.properties.catsum);
-		  })
+		  });
 
 
  		this.engWalesG = this.svg.append("g")
@@ -111,7 +111,7 @@ class catMap {
 		    .attr("x", d => d.properties.tcity15nm == "Liverpool" ? this.projection(d3.geoCentroid(d))[0] - 10 : this.projection(d3.geoCentroid(d))[0])
 		    // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
 		    .attr("y", d => d.properties.tcity15nm == "Liverpool"  || d.properties.tcity15nm == "Cardiff" ? this.projection(d3.geoCentroid(d))[1] + 24 : this.projection(d3.geoCentroid(d))[1]+ 6)
-		    .text(d => d.properties.tcity15nm)
+		    .text(d => d.properties.tcity15nm);
 
 		// add a group for the scotland labels
 		this.scotlandG = this.svg.append("g")
@@ -129,7 +129,7 @@ class catMap {
 		  // translate a few of the labels specifically because they overlap with others on the map, needs a re-factor
 		  .attr("x", d => d.properties.name == "Glasgow" ? this.projection(d3.geoCentroid(d))[0]-60 : this.projection(d3.geoCentroid(d))[0])
 		  .attr("y", d => this.projection(d3.geoCentroid(d))[1]+20)
-		  .text(d => d.properties.name)
+		  .text(d => d.properties.name);
 
 	}
 
@@ -157,6 +157,7 @@ class catMap {
 
   	}
 	}
+
 	numberSentence (catSum) {
     let sentence = this.formatNumber(catSum) == 1 ? "About " + this.formatNumber(catSum) + " cat in this area" :
       this.formatNumber(catSum) == 0 ? "0 cats!" :
@@ -202,7 +203,6 @@ class catMap {
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return num_parts.join(".");
 
-
 	}
 
 	onFirstLoad (example) {
@@ -221,7 +221,6 @@ class catMap {
 	  this.numberSentence(exampleData[0].properties.catsum);
 
 	}
-
 }
 
 export { catMap };

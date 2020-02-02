@@ -21,8 +21,6 @@
 }
 
 // a variety of google fonts
-// @import url('https://fonts.googleapis.com/css?family=Chau+Philomene+One|Krub|Lacquer|Permanent+Marker&display=swap');
-// @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Neuton&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 // variables local to this app
 
@@ -120,9 +118,15 @@ main {
 			display: flex;
 		  flex-wrap: wrap;
 		  justify-content: flex-start;
+      @include breakpoint(phablet) {
+        justify-content: center;
+      }
 		}
 		.nums-wrap {
 			margin-bottom: 15px;
+      @include breakpoint(phablet) {
+        margin: 10px auto;
+      }
 		}
 		.number-of-cats {
 			font-size: 22px;
@@ -132,14 +136,10 @@ main {
 			@include breakpoint(phablet) {
 				flex-wrap: wrap;
 			}
-
 			font-family: 'Helvetica';
 			font-weight: 200;
 			margin: 40px 16px 16px 16px;
-			padding-top: 10px;
-			padding-right: 20px;
-			padding-left: 20px;
-			padding-bottom: 10px;
+			padding: 10px 20px 20px 10px;
 			margin-bottom: 90px;
 			display: flex;
 			p {
@@ -180,7 +180,6 @@ main {
         .hide {
           opacity: 0;
           overflow: hidden;
-          transition: opacity 0.5s;
         }
         .show {
           opacity: 1;
