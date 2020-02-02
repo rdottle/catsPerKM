@@ -42,7 +42,7 @@ $red: #ff1b9c;
 		margin-bottom: 20px;
 		color: $blue;
 		font-family: $font-fam;
-		font-size: 3em;
+		font-size: 4em;
 	}
 
 	.dek {
@@ -112,18 +112,27 @@ main {
 			width: 95%;
 			margin-right: 20px;
 			color: $blue;
+      position: relative;
+      top: -45px;
+      @include breakpoint(phablet) {
+        top: 0px;
+      }
 		}
 		.inner-image-wrap {
 			margin: 0 auto;
 			display: flex;
 		  flex-wrap: wrap;
-		  justify-content: flex-start;
+		  justify-content: center;
       @include breakpoint(phablet) {
-        justify-content: center;
+        margin-top: 20px;
       }
 		}
 		.nums-wrap {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
 			margin-bottom: 15px;
+      padding-left: 30px;
       @include breakpoint(phablet) {
         margin: 10px auto;
       }
