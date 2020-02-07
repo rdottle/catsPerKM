@@ -43,8 +43,10 @@ class catMap {
 
   	// color scale for the sum of the cats per 25km square
 		this.colorScale = d3.scaleLinear()
-  		.domain(d3.extent(this.greatBritainShape.features, d => {return d.properties.catsum}))
-  		.range(['#fec770', '#ff1b9c']);
+  		.domain([0,1,75183])
+  		.range(['#c1c1c1','#fec770', '#ff1b9c']);
+
+    console.log(this.colorScale(10000))
 
 	}
 

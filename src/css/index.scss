@@ -212,6 +212,38 @@ main {
 			width: 100%;
 		}
 		font-family: $font-fam;
+    .key-colors {
+      display: flex;
+      margin-left: 34px;
+      flex-direction: column;
+    }
+    .squares {
+      display: flex;
+    }
+    .labels {
+      display: flex;
+      font-family: $font-fam;
+      font-size: 10px;
+      color: $font;
+      span {
+        margin-right: 40px;
+        margin-bottom: 5px;
+      }
+    }
+    .square {
+      height: 15px;
+      width: 45px;
+
+      &.min {
+        background-color: #fec770;
+        }
+      &.med {
+        background-color: rgb(254, 176, 118);
+      }
+      &.max {
+        background-color: #ff1b9c;
+      }
+    }
 		svg {
 			cursor: crosshair;
 			overflow: visible;
@@ -221,19 +253,22 @@ main {
 		}
 		.key {
 			position: absolute;
-			bottom: 33%;
+      top: 200px;
 			display: flex;
 			margin-left: 36px;
 			font-family: $font-fam;
 			color: $font;
+      font-size: 12px;
       @include breakpoint(phablet) {
-        top: 0%;
+        top: 3%;
         position: relative;
       }
 			.square {
 				height: 15px;
 				width: 15px;
-				background-color: #fec770;
+        position: relative;
+        bottom: 2px;
+				background-color: #c1c1c1;
 				margin-right: 10px;
 			}
 	}
