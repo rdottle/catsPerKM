@@ -230,20 +230,22 @@ class catMap {
 	}
 
   gifMagnify() {
-  d3.select(".microscope img").remove();
-  if (this.catAmount < 150) {
-    d3.select(".microscope").style("opacity", 0).style("visibility", "hidden")
-    d3.select(".microscope").append("img").style("position", "absolute")
-    .attr("src", "https://cataas.com/cat/gif?height=" + this.catAmount*3)
-    .style("height", "250px")
 
-    d3.selectAll(".img-cats").on("mouseenter", () => {
-      d3.select(".microscope").style("visibility", "visible").style("opacity", 1)
-      d3.select(".microscope img").style("top", d3.event.pageY - 100 + "px").style("left", d3.event.pageX + "px").style("z-index", "10000")
+    if(!this.mobile) {
 
-    })
-  }
+      d3.select(".microscope img").remove();
+        if (this.catAmount < 150) {
+          d3.select(".microscope").style("opacity", 0).style("visibility", "hidden")
+          d3.select(".microscope").append("img").classed("hover-image", true).style("position", "absolute")
+          .attr("src", "https://cataas.com/cat/gif?height=" + this.catAmount*3)
+          .style("height", "250px");
 
+          d3.selectAll(".img-cats").on("mouseenter", () => {
+            d3.select(".microscope").style("visibility", "visible").transition().delay(200).style("opacity", 1)
+            d3.select(".microscope img").transition().duration(150).ease(d3.easeLinear).style("top", d3.event.pageY - 100 + "px").style("left", d3.event.pageX + "px").style("z-index", "10000")
+          })
+        }
+    }
   }
 }
 

@@ -35,6 +35,9 @@ $red: #ff1b9c;
 .microscope {
   z-index: 10000;
   filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(190deg);
+  .hover-image {
+    box-shadow: 10px 10px 5px 0px rgba(72,25,203,0.41);
+  }
 }
 
 .header {
