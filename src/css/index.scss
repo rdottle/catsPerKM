@@ -23,6 +23,7 @@
 // a variety of google fonts
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 // variables local to this app
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
 $font-fam: 'Press Start 2P', sans-serif;
 $background: #ffeed2;
@@ -50,7 +51,7 @@ $red: #ff1b9c;
 			font-size: 22px;
 			margin-left: 37px;
 			color: $black;
-			font-family: 'Helvetica';
+      font-family: 'Montserrat', sans-serif;
 			font-weight: 200;
 			color: $font;
 	}
@@ -132,7 +133,7 @@ main {
       margin-left: auto;
       margin-right: auto;
 			margin-bottom: 15px;
-      padding-left: 30px;
+      padding-left: 40px;
       @include breakpoint(phablet) {
         margin: 10px auto;
       }
@@ -145,7 +146,7 @@ main {
 			@include breakpoint(phablet) {
 				flex-wrap: wrap;
 			}
-			font-family: 'Helvetica';
+      font-family: 'Montserrat', sans-serif;
 			font-weight: 200;
 			margin: 40px 16px 16px 16px;
 			padding: 10px 20px 20px 10px;
@@ -155,7 +156,7 @@ main {
 				color: $font;
 				font-size: 20px;
 				margin-top: 0;
-				line-height: 1.5em;
+				line-height: 1.8em;
 			}
 			.source {
         cursor: pointer;
@@ -165,7 +166,7 @@ main {
 				text-align: right;
 				margin-right: 20px;
 				color: $font;
-        font-family: "Helvetica";
+        font-family: 'Montserrat', sans-serif;
 				@include breakpoint(phablet) {
 						position: sticky;
             margin-top: 30px;
