@@ -16,6 +16,8 @@ class catMap {
   	// towns i want to show on the map for now, might add more in the future?
 		this.major = ["London", "Manchester", "Bristol", "Liverpool", "Birmingham", "Cardiff"];
 
+    this.catAmount;
+
   	// get width of page, will not be resized automatically
   	this.width = this.mobile ? window.innerWidth : window.innerWidth/2.5;
   	this.height = window.innerHeight - 90;
@@ -28,7 +30,7 @@ class catMap {
 
   	this.initProjection();
 
-  	// draw this map!
+    // draw this map!
 		this.draw();
 
 	}
@@ -39,14 +41,12 @@ class catMap {
 		this.imageScale = d3.scaleLog()
 		  .base(10)
   		.domain([1, 10, 20, 100, 1000])
-  		.range([(this.mobile ? 300 : 350), 75, 65, 30, 7]);
+  		.range([350, 75, 65, 30, 7]);
 
   	// color scale for the sum of the cats per 25km square
 		this.colorScale = d3.scaleLinear()
-  		.domain([0,1,75183])
+  		.domain([0,0.00001,75183])
   		.range(['#c1c1c1','#fec770', '#ff1b9c']);
-
-    console.log(this.colorScale(10000))
 
 	}
 
@@ -84,6 +84,7 @@ class catMap {
 		  .style("fill", d => this.colorScale(d.properties.catsum))
 		  .on("mouseover", (d,i,els) => {
 		  	 	this.hoverOver(d,i,els);
+          this.gifMagnify();
 		    })
 		  .on("mouseout", (d,i,els) => {
 		    	d3.selectAll("path").style("opacity", 1).classed("highlight", false);
@@ -94,6 +95,8 @@ class catMap {
 					this.interactionsWithGrid(d,i,els);
 		     	this.calcImage(d.properties.catsum);
           this.numberSentence(d.properties.catsum);
+          this.gifMagnify();
+
 		  });
 
 
@@ -179,9 +182,11 @@ class catMap {
   		d3.select(".card .inner-image-wrap")
   			.append("img")
   			.attr("class", "img-cats")
-  			.attr("src", "https://cataas.com/cat/gif?height="+Math.ceil(this.imageScale(catsTotal)));
-
+  			.attr("src", Math.ceil(this.imageScale(catsTotal)) > 100 ? "https://cataas.com/cat/gif?height=" + Math.ceil(this.imageScale(catsTotal)) : "https://cataas.com/cat/gif?height=" + Math.ceil(this.imageScale(catsTotal)) * 3)
+        .style("height", Math.ceil(this.imageScale(catsTotal)) + "px");
   	}
+
+    this.catAmount = Math.ceil(this.imageScale(catsTotal));
 	}
 
 	interactionsWithGrid (d, i, els) {
@@ -221,8 +226,25 @@ class catMap {
 
 	  this.calcImage(exampleData[0].properties.catsum);
 	  this.numberSentence(exampleData[0].properties.catsum);
-
+    this.gifMagnify();
 	}
+
+  gifMagnify() {
+  d3.select(".microscope img").remove();
+  if (this.catAmount < 150) {
+    d3.select(".microscope").style("opacity", 0).style("visibility", "hidden")
+    d3.select(".microscope").append("img").style("position", "absolute")
+    .attr("src", "https://cataas.com/cat/gif?height=" + this.catAmount*3)
+    .style("height", "250px")
+
+    d3.selectAll(".img-cats").on("mouseenter", () => {
+      d3.select(".microscope").style("visibility", "visible").style("opacity", 1)
+      d3.select(".microscope img").style("top", d3.event.pageY - 100 + "px").style("left", d3.event.pageX + "px").style("z-index", "10000")
+
+    })
+  }
+
+  }
 }
 
 export { catMap };

@@ -32,6 +32,11 @@ $black: #222222;
 $blue: #4819cb;
 $red: #ff1b9c;
 
+.microscope {
+  z-index: 10000;
+  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(190deg);
+}
+
 .header {
 	margin-top: 20px;
 	@include breakpoint(phablet) {
