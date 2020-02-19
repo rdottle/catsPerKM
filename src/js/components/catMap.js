@@ -242,10 +242,10 @@ class catMap {
 
           d3.selectAll(".img-cats").on("mouseenter", () => {
             d3.select(".microscope").style("visibility", "visible").transition().delay(200).style("opacity", 1)
-            d3.select(".microscope img").transition().duration(150).ease(d3.easeLinear).style("top", d3.event.pageY - 100 + "px").style("left", d3.event.pageX + "px").style("z-index", "10000");
+            d3.select(".microscope img").transition().ease(d3.easeLinear).style("top", d3.event.pageY - 100 + "px").style("left", d3.event.pageX + "px").style("z-index", "10000");
           })
           d3.selectAll(".img-cats").on("mouseout", () => {
-            d3.select(".microscope").style("visibility", "visible").transition().delay(200).duration(200).style("opacity", 0)
+            d3.select(".microscope").style("visibility", "visible").transition().delay(500).duration(500).style("opacity", 0)
           })
         }
     }
